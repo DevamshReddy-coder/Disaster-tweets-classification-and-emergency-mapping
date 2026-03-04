@@ -1,0 +1,545 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@500;600;700&display=swap');
+
+:root {
+  --bg-color: #F8FAFC;
+  --panel-bg: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --primary: #0F172A;
+  --primary-hover: #1E293B;
+  --accent: #EF4444;
+  --accent-hover: #DC2626;
+  --secondary: #22C55E;
+  --warning: #F59E0B;
+  --border-color: #E2E8F0;
+  --radius: 12px;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  --font-heading: 'Poppins', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --transition: all 200ms ease-in-out;
+
+  /* Disaster colors */
+  --disaster-fire: #EF4444;
+  --disaster-flood: #3B82F6;
+  --disaster-earthquake: #8B5CF6;
+  --disaster-explosion: #F97316;
+  --disaster-other: #64748B;
+}
+
+[data-theme='dark'] {
+  --bg-color: #020617;
+  --panel-bg: #0F172A;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --primary: #F8FAFC;
+  --primary-hover: #E2E8F0;
+  --border-color: #1E293B;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  transition: background-color var(--transition), color var(--transition);
+  overflow: hidden;
+  height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+}
+
+.navbar {
+  height: 64px;
+  background-color: var(--panel-bg);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: var(--panel-bg);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  transition: width var(--transition);
+}
+
+.sidebar.collapsed {
+  width: 72px;
+}
+
+.content-area {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  overflow: hidden;
+}
+
+/* Three zones */
+.zone {
+  background-color: var(--panel-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.zone-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+.zone-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.tweet-stream-zone {
+  flex: 1;
+  min-width: 320px;
+  max-width: 400px;
+}
+
+.map-zone {
+  flex: 2;
+  position: relative;
+}
+
+.insights-zone {
+  flex: 1.2;
+  min-width: 320px;
+  max-width: 450px;
+}
+
+/* Card classes */
+.card {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* Tweet Cards */
+.tweet-card {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: var(--transition);
+  cursor: pointer;
+  background: var(--panel-bg);
+}
+
+.tweet-card:hover {
+  border-color: var(--text-secondary);
+}
+
+.tweet-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tweet-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.tweet-user {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tweet-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.tweet-text {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+/* Badge classes */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-fire {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--disaster-fire);
+}
+
+.badge-wildfire {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--disaster-fire);
+}
+
+.badge-flood {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--disaster-flood);
+}
+
+.badge-floods {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--disaster-flood);
+}
+
+.badge-earthquake {
+  background-color: rgba(139, 92, 246, 0.15);
+  color: var(--disaster-earthquake);
+}
+
+.badge-explosion {
+  background-color: rgba(249, 115, 22, 0.15);
+  color: var(--disaster-explosion);
+}
+
+.badge-hurricanes {
+  background-color: rgba(14, 165, 233, 0.15);
+  color: #0EA5E9;
+}
+
+.badge-tornadoes {
+  background-color: rgba(168, 85, 247, 0.15);
+  color: #A855F7;
+}
+
+.badge-drought {
+  background-color: rgba(234, 179, 8, 0.15);
+  color: #EAB308;
+}
+
+.badge-other {
+  background-color: rgba(100, 116, 139, 0.15);
+  color: var(--disaster-other);
+}
+
+/* Progress Bar */
+.progress-container {
+  width: 100%;
+  height: 6px;
+  background-color: var(--border-color);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Specific elements */
+.pulse {
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-dot.live {
+  background-color: var(--secondary);
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+.status-dot.disconnected {
+  background-color: var(--accent);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+  background: var(--bg-color);
+  color: var(--text-primary);
+}
+
+.btn:hover {
+  background: var(--border-color);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--bg-color);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  color: var(--bg-color);
+}
+
+/* Stats Card specific */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stat-box {
+  background: var(--bg-color);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  margin-top: 8px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Alerts Panel */
+.alerts-container {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.alert-toast {
+  background: var(--panel-bg);
+  border-left: 4px solid var(--accent);
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 320px;
+  pointer-events: auto;
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  border-radius: var(--radius);
+  z-index: 10;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .content-area {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .map-zone {
+    min-height: 400px;
+    flex: none;
+  }
+
+  body,
+  .app-container {
+    height: auto;
+    overflow: visible;
+  }
+}
+
+/* Auth Login Screen */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-color);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 40px;
+  box-shadow: var(--shadow-hover);
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  transition: var(--transition);
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .login-input:focus {
+    box-shadow: 0 0 0 2px rgba(248, 250, 252, 0.2);
+  }
+}
