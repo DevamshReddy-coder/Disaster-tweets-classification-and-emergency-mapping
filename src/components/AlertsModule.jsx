@@ -22,7 +22,8 @@ const AlertsModule = ({ alerts, onDismiss }) => {
     const handleBroadcast = async (alert) => {
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`http://localhost:3001/api/alerts/${alert.id}/broadcast`, {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+            const res = await fetch(`${apiUrl}/api/alerts/${alert.id}/broadcast`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

@@ -29,7 +29,8 @@ export default function App() {
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    const ws = new WebSocket('ws://localhost:3001');
+    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:3001';
+    const ws = new WebSocket(wsUrl);
 
     ws.onopen = () => {
       setIsConnected(true);
@@ -67,7 +68,8 @@ export default function App() {
     if (!isAuthenticated) return;
     const fetchAnalytics = async () => {
       try {
-        const res = await axios.get('http://localhost:3001/api/analytics/summary');
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+        const res = await axios.get(`${apiUrl}/api/analytics/summary`);
         if (res.status === 200) setMetrics(res.data);
       } catch (e) { /* backend offline */ }
     };

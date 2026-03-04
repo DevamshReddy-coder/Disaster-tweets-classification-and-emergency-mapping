@@ -18,11 +18,12 @@ const Login = () => {
         setLoading(true);
 
         try {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
             if (isLogin) {
-                const res = await axios.post('http://localhost:3001/api/auth/login', { email, password });
+                const res = await axios.post(`${apiUrl}/api/auth/login`, { email, password });
                 login(res.data.user, res.data.token);
             } else {
-                await axios.post('http://localhost:3001/api/auth/register', { name, email, password });
+                await axios.post(`${apiUrl}/api/auth/register`, { name, email, password });
                 setIsLogin(true); // Switch to login after register
                 setError('Registration successful, securely logging you out pending auth.');
                 setEmail('');
