@@ -235,11 +235,11 @@ const sendEmergencySMS = async (alert, contact) => {
     }
 };
 
-// Emergency Services Geo-Radius Mock Database
+// Emergency Services Geo-Radius Mock Database (using verified number for trial)
 const EMERGENCY_SERVICES = [
-    { role: 'Local Police Department Dispatch', phone: '+1-555-0199' },
-    { role: 'Fire & Rescue Command', phone: '+1-555-0188' },
-    { role: 'EMS & Ambulatory Services', phone: '+1-555-0177' }
+    { role: 'Local Police Department Dispatch', phone: '+918639396858' },
+    { role: 'Fire & Rescue Command', phone: '+918639396858' },
+    { role: 'EMS & Ambulatory Services', phone: '+918639396858' }
 ];
 
 // WebSocket Handler
