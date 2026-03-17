@@ -4,7 +4,6 @@ import Sidebar from './components/Sidebar';
 import TweetStreamPanel from './components/TweetStreamPanel';
 import InsightsPanel from './components/InsightsPanel';
 import MapPanel from './components/MapPanel';
-import AlertsPanel from './components/AlertsPanel';
 import Login from './components/Login';
 import AnalyticsModule from './components/AnalyticsModule';
 import LiveTweetsModule from './components/LiveTweetsModule';
@@ -138,9 +137,6 @@ export default function App() {
           {renderModule()}
         </div>
       </div>
-
-      {/* Floating Alerts — capped to 3 */}
-      <AlertsPanel alerts={visibleAlerts} onDismiss={dismissAlert} />
     </div>
   );
 }

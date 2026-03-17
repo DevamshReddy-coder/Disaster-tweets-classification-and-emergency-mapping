@@ -29,8 +29,6 @@ const AlertsModule = ({ alerts, onDismiss }) => {
             });
             if (res.ok) {
                 setBroadcasted(prev => new Set([...prev, alert.id]));
-                // Trigger a JS alert to show the operator that messages were sent
-                window.alert(`🚨 EMERGENCY BROADCAST SENT\n\nSMS Warning successfully broadcasted to people in the affected zone for Incident: ${alert.id}`);
             }
         } catch (e) {
             console.error(e);
